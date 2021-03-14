@@ -1,20 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PlayerController!{% endblock %}
+{% block title %} - {{ player.firstname }} {{ player.lastname }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('player') }}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container-fluid p-0 bg-primary flex-grow-1  d-flex flex-column">
+        <div class="row m-0">
+            <div class="col-12 text-center mb-5"><h1
+                        class="text-warning">{{ player.firstname }} {{ player.lastname }}</h1>
+            </div>
+            <div class="col-12 col-md-6">
+                <div id="id-player" hidden>{{ player.id }}</div>
+                {% if not (player.position == "" and player.heightfeet == null and player.weightpounds == null) %}
+                    <div class="row justify-content-center">
+                        <div class="col-9 col-md-7 col-lg-5 card bg-dark">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr>
+                                    <th scope="row" class="text-light">
+                                        Position{{ (player.position == 'G' or player.position == 'G-F' or player.position == 'F-G') ? 's' : '' }}</th>
+                                    <td class="text-warning">
+                                        {% if player.position == "C" %}
+                                            Center
+                                        {% elseif player.position == "G" %}
+                                            Point Guard<br>Shooting Guard
+                                        {% elseif player.position == "F" %}
+                                            Small Forward et Power Forward
+                                        {% elseif (player.position == "C-F") or (player.position == "F-C") %}
+                                            Power Forward
+                                        {% elseif (player.position == "G-F") or (player.position == "F-G") %}
+                                            Shooting Guard<br>Small Forward
+                                        {% elseif (player.position == "P-G") or (player.position == "G-P") %}
+                                            Point Guard
+                                        {% elseif (player.position == "S-G") or (player.position == "G-S") %}
+                                            Shooting Guard
+                                        {% elseif (player.position == "P-F") or (player.position == "F-P") %}
+                                            Power Forward
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% if player.heightfeet != null %}
+                                    <tr>
+                                        <th scope="row" class="text-light">Hauteur</th>
+                                        <td class="text-warning">{{ (player.heightfeet / 3.281)|round(2, 'common') }}
+                                            mètre{% if (player.heightfeet / 3.281)|round(2, 'common') >= 2 %}s{% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if player.weightpounds != null %}
+                                    <tr>
+                                        <th scope="row" class="text-light">Poids</th>
+                                        <td class="text-warning">{{ (player.weightPounds / 2.205)|round(2, 'common') }}
+                                            Kg
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row justify-content-center mt-5">
+                    <div class="col-9 col-md-7 col-lg-5 card bg-warning p-3">
+                        <h5><strong>[{{ player.team.abbreviation }}]</strong> {{ player.team.fullname }}</h5>
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="text-light">Conference</th>
+                                <td class="text-primary">{{ player.team.conference }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-light">Division</th>
+                                <td class="text-primary">{{ player.team.division }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-light">Ville</th>
+                                <td class="text-primary">{{ player.team.city }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row justify-content-center">
+                    <div class="form-row justify-content-center col-6 col-sm-5 col-md-7 col-lg-6 pt-4 pt-md-0">
+                        <label class="col-form-label text-light" for="FormControlSelect">Saison </label>
+                        <select class="form-control col-3 col-md-4 text-light bg-transparent" id="FormControlSelect">
+                            {% for i in ("now"|date("Y")-1)..1979 %}
+                                <option class="bg-primary">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="season-div" class="card d-flex justify-content-center bg-primary border-light pt-3 col-10 my-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/nbastat/src/Controller/PlayerController.php'|file_link(0) }}">src/Controller/PlayerController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/nbastat/templates/player/index.html.twig'|file_link(0) }}">templates/player/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('player') }}
 {% endblock %}
