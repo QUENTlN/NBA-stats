@@ -1,2 +1,2 @@
-import './styles/player.scss';
+import './styles/home.scss';
 import './features/autocomplete';

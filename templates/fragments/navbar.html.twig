@@ -6,16 +6,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li class="nav-item {{ app.request.get('_route') == 'players' ? 'active' }}">
                 <a class="nav-link" href="#">Joueur</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Comparer</a>
+            <li class="nav-item {{ app.request.get('_route') == 'compare' ? 'active' }}">
+                <a class="nav-link" href="{{ path('compare') }}">Comparer</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control bg-primary border-light mr-sm-2" type="text" placeholder="Joueur" aria-label="Search">
-            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Rechercher</button>
-        </form>
     </div>
 </nav>

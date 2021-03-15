@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Player;
-use App\Entity\Team;
+use App\Service\PlayerGenerator;
+use App\Service\SeasonAverageGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -18,43 +15,40 @@ class PlayerController extends AbstractController
     /**
      * @Route("/player/{idPlayer}", name="player", requirements={"idPlayer"="\d+"})
      * @param int $idPlayer
-     * @param HttpClientInterface $client
+     * @param PlayerGenerator $playerGenerator
      * @return Response
-     * @throws TransportExceptionInterface
      */
-    public function index(int $idPlayer, HttpClientInterface $client): Response
+    public function index(int $idPlayer, PlayerGenerator $playerGenerator): Response
     {
-        $response = $client->request(
-            'GET',
-            'https://www.balldontlie.io/api/v1/players/' . $idPlayer
-        );
-
-        $playerAPI = $response->toArray();
-
-        $player = new Player();
-        $player->setId($playerAPI['id']);
-        $player->setFirstName($playerAPI['first_name']);
-        $player->setLastName($playerAPI['last_name']);
-        $player->setPosition($playerAPI['position']);
-        $player->setHeightFeet($playerAPI['height_feet']);
-        $player->setHeightInches($playerAPI['height_inches']);
-        $player->setWeightPounds($playerAPI['weight_pounds']);
-
-        $teamAPI = $playerAPI['team'];
-
-        $team = new Team();
-        $team->setId($teamAPI['id']);
-        $team->setAbbreviation($teamAPI['abbreviation']);
-        $team->setCity($teamAPI['city']);
-        $team->setConference($teamAPI['conference']);
-        $team->setDivision($teamAPI['division']);
-        $team->setFullName($teamAPI['full_name']);
-        $team->setName($teamAPI['name']);
-
-        $player->setTeam($team);
+        $player = $playerGenerator->getPlayer($idPlayer);
 
         return $this->render('player/index.html.twig', [
             'player' => $player,
+        ]);
+    }
+
+    /**
+     * @Route("/compare/{season}/{idPlayer}", name="compare", defaults={"season" = 0, "idPlayer" = 0})
+     * @param int|null $season
+     * @param int $idPlayer
+     * @param SeasonAverageGenerator $seasonAverageGenerator
+     * @return Response
+     */
+    public function compare(int $season, int $idPlayer, SeasonAverageGenerator $seasonAverageGenerator): Response
+    {
+        if ($season !== 0){
+            if ($idPlayer !== 0){
+                $stat = $seasonAverageGenerator->getStat($season,$idPlayer);
+            }else{
+                $stat = null;
+            }
+        }else{
+            $season = null;
+            $stat = null;
+        }
+        return $this->render('player/compare.html.twig', [
+            'stat' => $stat,
+            'season' => $season
         ]);
     }
 }

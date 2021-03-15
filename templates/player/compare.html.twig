@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('compare') }}
+{% endblock %}
+
+{% block body %}
+    <div id="alertPlayer" class="alert alert-warning" data-alert="alert"></div>
+    <div class="container-fluid p-0 bg-primary flex-grow-1  d-flex flex-column">
+        <div class="row m-0">
+            <div class="col-12 text-center mb-5"><h1
+                        class="text-warning">Comparer</h1>
+            </div>
+            <div class="col-12">
+                <div id="id-player" hidden></div>
+                <div class="row justify-content-center">
+                    <div class="form-row justify-content-center col-12 pt-4 pt-md-0">
+                        <div class="input-group col-12 col-md-5">
+                            <label class="col-form-label text-light" for="FormControlSelect">Saison</label>
+                            <select class="form-control text-light bg-transparent mx-4"
+                                    id="FormControlSelect">
+                                {% for i in ("now"|date("Y")-1)..1979 %}
+                                    <option class="bg-primary"
+                                            {% if i is same as season %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group col-12 col-md-5 pt-4 pt-md-0">
+                            <label class="col-form-label text-light" for="player-name">Joueur</label>
+                            <input id="player-name" type="text"
+                                   class="player-name form-control bg-transparent text-light border-light mx-4"
+                                   placeholder="Nom du joueur">
+                        </div>
+                    </div>
+                    {# <div class="col-6 form-row justify-content-center mb-3"> #}
+                    {# </div> #}
+                    {# <div class="col-12 row justify-content-center mx-2 pt-4"> #}
+                    {# </div> #}
+                    <div class="table-responsive">
+                        <table class="table table-sm text-light my-4 col-12">
+                            <thead>
+                            <tr>
+                                <th scope="col">PLAYER</th>
+                                <th scope="col">GAMES PLAYED</th>
+                                <th scope="col">MIN</th>
+                                <th scope="col">FGM</th>
+                                <th scope="col">FGA</th>
+                                <th scope="col">FG3M</th>
+                                <th scope="col">FG3A</th>
+                                <th scope="col">FTM</th>
+                                <th scope="col">FTA</th>
+                                <th scope="col">OREB</th>
+                                <th scope="col">DREB</th>
+                                <th scope="col">REB</th>
+                                <th scope="col">AST</th>
+                                <th scope="col">STL</th>
+                                <th scope="col">BLK</th>
+                                <th scope="col">TURNOVER</th>
+                                <th scope="col">PF</th>
+                                <th scope="col">PTS</th>
+                                <th scope="col">FG_PCT</th>
+                                <th scope="col">FG3_PCT</th>
+                                <th scope="col">FT_PCT</th>
+                                <th scope="col">Retirer</th>
+                            </tr>
+                            </thead>
+                            <tbody id="stats-players-tbody">
+                            {% if not (stat is same as null) %}
+                                <tr class='player-line' data-player-id='{{ stat.player.id }}'>
+                                    <th scope="row">{{ stat.player.firstname }} {{ stat.player.lastname }}</th>
+                                    <td class='td-games_played'>{{ stat.gamePlayed }}</td>
+                                    <td class='td-min'>{{ stat.min }}</td>
+                                    <td class='td-fgm'>{{ stat.fgm }}</td>
+                                    <td class='td-fga'>{{ stat.fga }}</td>
+                                    <td class='td-fg3m'>{{ stat.fg3m }}</td>
+                                    <td class='td-fg3a'>{{ stat.fg3a }}</td>
+                                    <td class='td-ftm'>{{ stat.ftm }}</td>
+                                    <td class='td-fta'>{{ stat.fta }}</td>
+                                    <td class='td-oreb'>{{ stat.oreb }}</td>
+                                    <td class='td-dreb'>{{ stat.dreb }}</td>
+                                    <td class='td-reb'>{{ stat.reb }}</td>
+                                    <td class='td-ast'>{{ stat.ast }}</td>
+                                    <td class='td-stl'>{{ stat.stl }}</td>
+                                    <td class='td-blk'>{{ stat.blk }}</td>
+                                    <td class='td-turnover'>{{ stat.turnover }}</td>
+                                    <td class='td-pf'>{{ stat.pf }}</td>
+                                    <td class='td-pts'>{{ stat.pts }}</td>
+                                    <td class='td-fg_pct'>{{ stat.fgPct }}</td>
+                                    <td class='td-fg3_pct'>{{ stat.fg3Pct }}</td>
+                                    <td class='td-ft_pct'>{{ stat.ftPct }}</td>
+                                    <td><button class="btn btn-warning w-100 btn-supp"><i class="fas fa-times-circle"></i></button></td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('compare') }}
+{% endblock %}
