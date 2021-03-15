@@ -6,13 +6,12 @@ _seasonSelect.change(function () {
     load_stat();
 });
 
-$(function() {
+$(function () {
     load_stat();
 });
 
 function load_stat() {
     $.get("https://www.balldontlie.io/api/v1/season_averages?season=" + _seasonSelect.val() + "&player_ids[]=" + $('#id-player').html(), function (data) {
-        console.log(data.data);
         let stat = data.data[0];
         if (stat != null) {
             $('#season-div').html(
@@ -99,7 +98,7 @@ function load_stat() {
                 "    </tr>\n" +
                 "  </tbody>\n" +
                 "</table>" +
-                "<a class='w-100' href='/compare/"+stat.player_id+"'><button class='btn btn-dark w-100 mb-3'>Comparer</button></a>"
+                "<a class='w-100' href='/compare/" + _seasonSelect.val() + "/" + stat.player_id + "'><button class='btn btn-dark w-100 mb-3'>Comparer</button></a>"
             );
         } else {
             $('#season-div').html("<h6 class='text-center text-light mb-3'>Le joueur n'a pas joué cette année là</h6>");

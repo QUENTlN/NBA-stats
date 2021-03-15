@@ -1,3 +1,30 @@
 $primary: darken(#131a26, 70%);
 
 @import '~bootstrap';
+
+#alertPlayer {
+  position: absolute;
+  z-index: 1400;
+  top: 2%;
+  right: 4%;
+  margin: 0 auto;
+  text-align: center;
+  display: none;
+}
+
+#FormControlSelect::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+#FormControlSelect::-webkit-scrollbar {
+  width: 12px;
+}
+
+#FormControlSelect::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+
+option:hover {
+  background-color: #000;
+}

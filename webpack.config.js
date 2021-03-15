@@ -26,6 +26,8 @@ Encore
 
     .addEntry('player', './assets/player.js')
 
+    .addEntry('compare', './assets/compare.js')
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
 

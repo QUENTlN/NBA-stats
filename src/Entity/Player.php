@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +54,16 @@ class Player
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SeasonAverage::class, mappedBy="player", orphanRemoval=true)
+     */
+    private $seasonAverages;
+
+    public function __construct()
+    {
+        $this->seasonAverages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,6 +156,36 @@ class Player
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeasonAverage[]
+     */
+    public function getSeasonAverages(): Collection
+    {
+        return $this->seasonAverages;
+    }
+
+    public function addSeasonAverage(SeasonAverage $seasonAverage): self
+    {
+        if (!$this->seasonAverages->contains($seasonAverage)) {
+            $this->seasonAverages[] = $seasonAverage;
+            $seasonAverage->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeasonAverage(SeasonAverage $seasonAverage): self
+    {
+        if ($this->seasonAverages->removeElement($seasonAverage)) {
+            // set the owning side to null (unless already changed)
+            if ($seasonAverage->getPlayer() === $this) {
+                $seasonAverage->setPlayer(null);
+            }
+        }
 
         return $this;
     }
