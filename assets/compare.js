@@ -2,6 +2,10 @@ import './features/autocompleteStats';
 import autocomplete from 'jquery-ui/ui/widgets/autocomplete';
 import './styles/autocomplete.scss';
 
+$( document ).ready(function() {
+    refreshColors()
+});
+
 $('.player-name').on("focus", function () {
     $(this).autocomplete({
         source: function (request, response) {
@@ -22,7 +26,6 @@ $('body').on('click', '.player-stat', function () {
 $('#FormControlSelect').change(function () {
     $('tr.player-line').each(function () {
         $.get("https://www.balldontlie.io/api/v1/players/" + $(this).data('player-id'), function (data) {
-            console.log(data);
             addLine(data);
         });
         $(this).remove();
@@ -31,6 +34,8 @@ $('#FormControlSelect').change(function () {
 
 $('body').on("click", ".btn-supp", function () {
     $(this).parent().parent().remove();
+    refreshColors();
+    updateBdd();
 })
 
 const tds = ['td-games_played', 'td-min', 'td-fgm', 'td-fga', 'td-fg3m', 'td-fg3a', 'td-ftm', 'td-fta', 'td-oreb', 'td-dreb', 'td-reb', 'td-ast', 'td-stl', 'td-blk', 'td-turnover', 'td-pf', 'td-pts', 'td-fg_pct', 'td-fg3_pct', 'td-ft_pct'];
@@ -56,7 +61,7 @@ function refreshColors() {
                 } else if (lowest === parseFloat($(this).text())) {
                     WorstTd = null;
                 }
-                lowest = Math.min(highest, parseFloat($(this).text()));
+                lowest = Math.min(lowest, parseFloat($(this).text()));
             });
             if (BestTd !== null) {
                 BestTd.addClass("text-success");
@@ -70,8 +75,6 @@ function refreshColors() {
 
 function addLine(player){
     $.get("https://www.balldontlie.io/api/v1/season_averages?season=" + $('#FormControlSelect').val() + "&player_ids[]=" + player.id, function (data) {
-        console.log("https://www.balldontlie.io/api/v1/season_averages?season=" + $('#FormControlSelect').val() + "&player_ids[]=" + player.id);
-        console.log(data)
         const stat = data.data['0'];
         if (stat !== undefined) {
             $('#stats-players-tbody').append("<tr class='player-line' data-player-id='" + player.id + "'>\n" +
@@ -100,6 +103,7 @@ function addLine(player){
                 "                            </tr>"
             );
             refreshColors()
+            updateBdd()
         } else {
             $("#alertPlayer").html(player.first_name + " " + player.last_name +" ne jouais pas cette année là").fadeIn();
             closeSnoAlertBox();
@@ -111,4 +115,22 @@ function addLine(player){
             }
         }
     });
+}
+
+function updateBdd(){
+    const players = [];
+    const season = $('#FormControlSelect').val();
+    const idComparison = $('#id-comparison').val()
+    if ($('tr.player-line').length > 1){
+        $('tr.player-line').each(function () {
+            players.push($(this).data('player-id'))
+        });
+        $.ajax({
+            method: "POST",
+            url: "/updatebdd",
+            data: { season: season, players: players, idComparison: idComparison }
+        }).done(function( data ) {
+            $("#id-comparison").val(data);
+        });
+    }
 }

@@ -18,13 +18,13 @@ class SeasonAverageGenerator
         $this->playerGenerator = $playerGenerator;
     }
 
-    public function getStat($season,$id_player): SeasonAverage
+    public function getStat($season, $id_player): SeasonAverage
     {
+
         $response = $this->httpClient->request(
             'GET',
-            'https://www.balldontlie.io/api/v1/season_averages?seasons[]='.$season.'&player_ids[]=' . $id_player
+            'https://www.balldontlie.io/api/v1/season_averages?season=' . $season . '&player_ids[]=' . $id_player
         );
-
         $statAPI = $response->toArray()['data'][0];
 
         $stat = new SeasonAverage();

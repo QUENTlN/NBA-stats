@@ -35,10 +35,6 @@
                                    placeholder="Nom du joueur">
                         </div>
                     </div>
-                    {# <div class="col-6 form-row justify-content-center mb-3"> #}
-                    {# </div> #}
-                    {# <div class="col-12 row justify-content-center mx-2 pt-4"> #}
-                    {# </div> #}
                     <div class="table-responsive">
                         <table class="table table-sm text-light my-4 col-12">
                             <thead>
@@ -68,31 +64,36 @@
                             </tr>
                             </thead>
                             <tbody id="stats-players-tbody">
-                            {% if not (stat is same as null) %}
-                                <tr class='player-line' data-player-id='{{ stat.player.id }}'>
-                                    <th scope="row">{{ stat.player.firstname }} {{ stat.player.lastname }}</th>
-                                    <td class='td-games_played'>{{ stat.gamePlayed }}</td>
-                                    <td class='td-min'>{{ stat.min }}</td>
-                                    <td class='td-fgm'>{{ stat.fgm }}</td>
-                                    <td class='td-fga'>{{ stat.fga }}</td>
-                                    <td class='td-fg3m'>{{ stat.fg3m }}</td>
-                                    <td class='td-fg3a'>{{ stat.fg3a }}</td>
-                                    <td class='td-ftm'>{{ stat.ftm }}</td>
-                                    <td class='td-fta'>{{ stat.fta }}</td>
-                                    <td class='td-oreb'>{{ stat.oreb }}</td>
-                                    <td class='td-dreb'>{{ stat.dreb }}</td>
-                                    <td class='td-reb'>{{ stat.reb }}</td>
-                                    <td class='td-ast'>{{ stat.ast }}</td>
-                                    <td class='td-stl'>{{ stat.stl }}</td>
-                                    <td class='td-blk'>{{ stat.blk }}</td>
-                                    <td class='td-turnover'>{{ stat.turnover }}</td>
-                                    <td class='td-pf'>{{ stat.pf }}</td>
-                                    <td class='td-pts'>{{ stat.pts }}</td>
-                                    <td class='td-fg_pct'>{{ stat.fgPct }}</td>
-                                    <td class='td-fg3_pct'>{{ stat.fg3Pct }}</td>
-                                    <td class='td-ft_pct'>{{ stat.ftPct }}</td>
-                                    <td><button class="btn btn-warning w-100 btn-supp"><i class="fas fa-times-circle"></i></button></td>
-                                </tr>
+                            {% if not (stats is same as null) %}
+                                {% for stat in stats %}
+                                    <tr class='player-line' data-player-id='{{ stat.player.id }}'>
+                                        <th scope="row">{{ stat.player.firstname }} {{ stat.player.lastname }}</th>
+                                        <td class='td-games_played'>{{ stat.gamePlayed }}</td>
+                                        <td class='td-min'>{{ stat.min }}</td>
+                                        <td class='td-fgm'>{{ stat.fgm }}</td>
+                                        <td class='td-fga'>{{ stat.fga }}</td>
+                                        <td class='td-fg3m'>{{ stat.fg3m }}</td>
+                                        <td class='td-fg3a'>{{ stat.fg3a }}</td>
+                                        <td class='td-ftm'>{{ stat.ftm }}</td>
+                                        <td class='td-fta'>{{ stat.fta }}</td>
+                                        <td class='td-oreb'>{{ stat.oreb }}</td>
+                                        <td class='td-dreb'>{{ stat.dreb }}</td>
+                                        <td class='td-reb'>{{ stat.reb }}</td>
+                                        <td class='td-ast'>{{ stat.ast }}</td>
+                                        <td class='td-stl'>{{ stat.stl }}</td>
+                                        <td class='td-blk'>{{ stat.blk }}</td>
+                                        <td class='td-turnover'>{{ stat.turnover }}</td>
+                                        <td class='td-pf'>{{ stat.pf }}</td>
+                                        <td class='td-pts'>{{ stat.pts }}</td>
+                                        <td class='td-fg_pct'>{{ stat.fgPct }}</td>
+                                        <td class='td-fg3_pct'>{{ stat.fg3Pct }}</td>
+                                        <td class='td-ft_pct'>{{ stat.ftPct }}</td>
+                                        <td>
+                                            <button class="btn btn-warning w-100 btn-supp"><i
+                                                        class="fas fa-times-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             {% endif %}
                             </tbody>
                         </table>
@@ -101,6 +102,7 @@
             </div>
         </div>
     </div>
+    <div id="id-comparison" hidden></div>
 {% endblock %}
 
 {% block javascripts %}
