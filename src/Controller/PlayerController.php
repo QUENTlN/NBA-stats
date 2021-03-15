@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Comparison;
+use App\Entity\Player;
 use App\Repository\ComparisonRepository;
 use App\Repository\PlayerRepository;
 use App\Service\PlayerGenerator;
 use App\Service\SeasonAverageGenerator;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +53,11 @@ class PlayerController extends AbstractController
 
         $playerSearch = [];
         foreach ($playerSearchAPI as $playerAPI){
-            $playerSearch[] = $playerGenerator->getPlayer($playerAPI['id']);
+            $player = new Player();
+            $player->setId($playerAPI['id']);
+            $player->setFirstName($playerAPI['first_name']);
+            $player->setLastName($playerAPI['last_name']);
+            $playerSearch[] = $player;
         }
 
         return $this->render('player/players.html.twig', [
