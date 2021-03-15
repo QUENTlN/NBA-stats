@@ -98,7 +98,7 @@ function load_stat() {
                 "    </tr>\n" +
                 "  </tbody>\n" +
                 "</table>" +
-                "<a class='w-100' href='/compare/" + _seasonSelect.val() + "/" + stat.player_id + "'><button class='btn btn-dark w-100 mb-3'>Comparer</button></a>"
+                "<a class='w-100' href='/compare/" + _seasonSelect.val() + "?players[]=" + stat.player_id + "'><button class='btn btn-dark w-100 mb-3'>Comparer</button></a>"
             );
         } else {
             $('#season-div').html("<h6 class='text-center text-light mb-3'>Le joueur n'a pas joué cette année là</h6>");

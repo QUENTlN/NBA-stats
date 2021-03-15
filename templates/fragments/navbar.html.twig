@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ app.request.get('_route') == 'players' ? 'active' }}">
-                <a class="nav-link" href="#">Joueur</a>
+                <a class="nav-link" href="{{ path('players') }}">Joueurs</a>
             </li>
             <li class="nav-item {{ app.request.get('_route') == 'compare' ? 'active' }}">
                 <a class="nav-link" href="{{ path('compare') }}">Comparer</a>

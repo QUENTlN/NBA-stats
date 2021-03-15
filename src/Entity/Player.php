@@ -14,7 +14,6 @@ class Player
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -50,7 +49,7 @@ class Player
     private $weight_pounds;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="players")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="players", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;
@@ -60,9 +59,15 @@ class Player
      */
     private $seasonAverages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Comparison::class, mappedBy="players")
+     */
+    private $comparisons;
+
     public function __construct()
     {
         $this->seasonAverages = new ArrayCollection();
+        $this->comparisons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +190,33 @@ class Player
             if ($seasonAverage->getPlayer() === $this) {
                 $seasonAverage->setPlayer(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comparison[]
+     */
+    public function getComparisons(): Collection
+    {
+        return $this->comparisons;
+    }
+
+    public function addComparison(Comparison $comparison): self
+    {
+        if (!$this->comparisons->contains($comparison)) {
+            $this->comparisons[] = $comparison;
+            $comparison->addPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComparison(Comparison $comparison): self
+    {
+        if ($this->comparisons->removeElement($comparison)) {
+            $comparison->removePlayer($this);
         }
 
         return $this;

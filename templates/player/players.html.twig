@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} - Joueurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block body %}
+    <div id="alertPlayer" class="alert alert-warning" data-alert="alert"></div>
+    <div class="container-fluid p-0 bg-primary flex-grow-1  d-flex flex-column">
+        <div class="row m-0">
+            <div class="col-12 text-center mb-5"><h1
+                        class="text-warning">Chercher un joueur</h1>
+            </div>
+            <div class="col-12">
+                <div id="id-player" hidden></div>
+                <div class="row justify-content-center">
+                    <div class="form-row justify-content-center col-12 pt-4 pt-md-0">
+                        <div class="input-group col-12 col-md-5 pt-4 pt-md-0">
+                            <input id="player-name" type="text"
+                                   class="player-name form-control bg-transparent text-light border-light mx-4"
+                                   placeholder="Nom du joueur">
+                        </div>
+                        {% if  not ( app.request.get('search') is same as "" ) %}
+                        <div class="col-12 row justify-content-center mt-4">
+                            <h2 class="col-12 text-center text-light">resultat trouver pour {{ app.request.get('search') }}</h2>
+                            {% for playerSearch in playersSearch %}
+                            <div class="col-8"><a href="{{ path('player', {idPlayer: playerSearch.id }) }}"><p class="text-light text-center">{{ playerSearch.firstName }} {{ playerSearch.lastName }}</p></a></div>
+                            {% endfor %}
+
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-11 row mt-5">
+                        {% if comparisons|length > 0 %}
+                        <h2 class="text-light w-100 text-center">Dernières comparaisons</h2>
+                            {% for comparison in comparisons %}
+                                <div class="col-12 py-4 row border-bottom border-light">
+                                    {% set isFirstElement = true %}
+                                    <a href="{{ path('compare', {season: comparison.season}) }}" class="col-2 col-md-1 col-lg-1 d-flex align-items-center mb-3 mb-md-0"><h5 class="text-warning mr-5">{{ comparison.season }}</h5></a>
+                                    <div class="col-12 col-md-8 col-lg-10 mb-3 mb-md-0">
+                                        {% for player in comparison.players %}
+                                            <a href="{{ path('player', {idPlayer: player.id}) }}"><button class="btn btn-outline-light m-1">{{ player.firstName }} {{ player.lastName }}</button></a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="d-flex align-items-center col-12 col-md-2 col-lg-1 mb-3 mb-md-0"><a href="{{ path('compare', {season: comparison.season}) }}{% for player in comparison.players %}{% if isFirstElement == true %}?{% set isFirstElement = false %}{% else %}&{% endif %}players[]={{ player.id }}{% endfor %}"><button class="btn btn-warning">{#<i class="fas fa-eye"></i>#}<strong>Comparaison</strong></button></a></div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="id-comparison" hidden></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}
