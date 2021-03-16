@@ -25,7 +25,7 @@
                         </div>
                         {% if  not ( app.request.get('search') is same as "" ) %}
                         <div class="col-12 row justify-content-center mt-4">
-                            <h2 class="col-12 text-center text-light">resultat trouver pour {{ app.request.get('search') }}</h2>
+                            <h2 class="col-12 text-center text-light">résultats trouvés pour "{{ app.request.get('search') }}"</h2>
                             {% for playerSearch in playersSearch %}
                             <div class="col-8"><a href="{{ path('player', {idPlayer: playerSearch.id }) }}"><p class="text-light text-center">{{ playerSearch.firstName }} {{ playerSearch.lastName }}</p></a></div>
                             {% endfor %}

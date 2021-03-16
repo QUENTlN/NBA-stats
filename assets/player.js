@@ -22,78 +22,78 @@ function load_stat() {
                 "      <td>" + stat.games_played + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">min</th>\n" +
+                "      <th scope=\"row\">MIN</th>\n" +
                 "      <td>" + stat.min + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fgm</th>\n" +
+                "      <th scope=\"row\">FGM</th>\n" +
                 "      <td>" + stat.fgm + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fga</th>\n" +
+                "      <th scope=\"row\">FGA</th>\n" +
                 "      <td>" + stat.fga + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fg3m</th>\n" +
+                "      <th scope=\"row\">FG3M</th>\n" +
                 "      <td>" + stat.fg3m + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fg3a</th>\n" +
+                "      <th scope=\"row\">FG3A</th>\n" +
                 "      <td>" + stat.fg3m + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">ftm</th>\n" +
+                "      <th scope=\"row\">FTM</th>\n" +
                 "      <td>" + stat.ftm + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fta</th>\n" +
+                "      <th scope=\"row\">FTA</th>\n" +
                 "      <td>" + stat.fta + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">oreb</th>\n" +
+                "      <th scope=\"row\">OREB</th>\n" +
                 "      <td>" + stat.oreb + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">dreb</th>\n" +
+                "      <th scope=\"row\">DREB</th>\n" +
                 "      <td>" + stat.dreb + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">reb</th>\n" +
+                "      <th scope=\"row\">REB</th>\n" +
                 "      <td>" + stat.reb + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">ast</th>\n" +
+                "      <th scope=\"row\">AST</th>\n" +
                 "      <td>" + stat.ast + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">stl</th>\n" +
+                "      <th scope=\"row\">STL</th>\n" +
                 "      <td>" + stat.stl + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">blk</th>\n" +
+                "      <th scope=\"row\">BLK</th>\n" +
                 "      <td>" + stat.blk + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">turnover</th>\n" +
+                "      <th scope=\"row\">TURNOVER</th>\n" +
                 "      <td>" + stat.turnover + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">pf</th>\n" +
+                "      <th scope=\"row\">PF</th>\n" +
                 "      <td>" + stat.pf + "</td>\n" +
                 "    </tr>\n" +
-                "      <th scope=\"row\">Points</th>\n" +
+                "      <th scope=\"row\">PTS</th>\n" +
                 "      <td>" + stat.pts + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fg pct</th>\n" +
+                "      <th scope=\"row\">FG PCT</th>\n" +
                 "      <td>" + stat.fg_pct + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">fg3 pct</th>\n" +
+                "      <th scope=\"row\">FG3 PCT</th>\n" +
                 "      <td>" + stat.fg3_pct + "</td>\n" +
                 "    </tr>\n" +
                 "    <tr>\n" +
-                "      <th scope=\"row\">ft pct</th>\n" +
+                "      <th scope=\"row\">FT PCT</th>\n" +
                 "      <td>" + stat.ft_pct + "</td>\n" +
                 "    </tr>\n" +
                 "  </tbody>\n" +
